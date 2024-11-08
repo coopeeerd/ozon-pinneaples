@@ -1,0 +1,22 @@
+{
+    "Accounts": [
+        {
+            "account_name": "Аккаунт 1",
+            "x-o3-app-version": "17.40.1(2518)",
+            "__Secure-access-token": "",
+            "__Secure-refresh-token": "",
+            "abt_data": "",
+            "use_proxy": false,
+            "proxy": ""
+        }
+    ],
+    "Pinneaples": {
+        "sleep_between_pinneaples": true,
+        "min_delay": 0,
+        "max_delay": 0,
+        "afk": true,
+        "chance_to_afk": 0,
+        "afk_time_min": 0,
+        "afk_time_max": 0
+    }
+}
