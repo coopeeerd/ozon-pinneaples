@@ -88,7 +88,7 @@ class Ozon():
                
                break
            except Exception as e:
-               print(e)
+               logger.warning(f"Исключение: {e}")
                continue
     
     def farm_pinneaple(self):
