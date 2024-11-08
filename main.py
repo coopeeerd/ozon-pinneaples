@@ -36,7 +36,7 @@ def session(config: dict):
         "Host": "api.ozon.ru",
         "MOBILE-GAID": str(uuid.uuid4()),
         "MOBILE-LAT": "0",
-        "User-Agent": "ozonapp_android/17.40.1+2517",
+        "User-Agent": "ozonapp_android/17.40.1+2518",
         "x-o3-app-name": "ozonapp_android",
         "x-o3-app-version": config["x-o3-app-version"],
         "x-o3-device-type": "mobile",
