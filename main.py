@@ -98,7 +98,7 @@ class Ozon():
             try:
                 value = random.randint(11111111, 999999999)
                 params = {
-                    "url": f"/products/{value}/?avtc=1&avte=4&avts=1730880275&layout_container=pdppage2copy&layout_page_index=2&sh=mc8W2I8izg&start_page_id=8b6f3cc9bc873a84f9dc289e0434c615"
+                    "url": f"/products/{value}/?layout_container=pdppage2copy&layout_page_index=2"
                 }
                         
                 response = self.session.get("https://api.ozon.ru/composer-api.bx/page/json/v2", params=params)
