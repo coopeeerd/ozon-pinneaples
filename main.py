@@ -48,7 +48,9 @@ def session(config: dict) -> tls_client.Session:
     session.cookies.set("x-o3-app-name", "ozonapp_android")
     session.cookies.set("__Secure-access-token", config["__Secure-access-token"])
     session.cookies.set("__Secure-refresh-token", config["__Secure-refresh-token"])
-    
+    if config["abt_data"]:
+        session.cookies.set("abt_data", config["abt_data"])
+        
     if config["use_proxy"]:
         session.proxies = f"http://{config["proxy"]}"
     
