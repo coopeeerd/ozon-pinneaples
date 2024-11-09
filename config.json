@@ -9,7 +9,7 @@
             "proxy": ""
         }
     ],
-    "Pinneaples": {
+    "Sleep_settings": {
         "sleep_between_pinneaples": true,
         "min_delay": 0,
         "max_delay": 0,
