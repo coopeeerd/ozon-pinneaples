@@ -140,7 +140,6 @@ class Ozon():
                 elif response.status_code == 403:
                     logger.error(f'[{self.account_name}] Ошибка при просмотре товара (403) -> возможно невалид куки.')
                     Utils.sleep_func(self.account_name, True)
-                    continue
                     
                 elif response.status_code == 404:
                     continue
