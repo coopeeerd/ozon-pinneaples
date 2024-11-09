@@ -47,7 +47,7 @@ v1.02: [Оповещения про обновления](https://t.me/+qY4o75Ao
    - Accounts:
        - `account_name`: название аккаунта
        - `x-o3-app-version`: версия приложения (не советую менять)
-       - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки
+       - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки, заполнять abt_data не обязательно
        - `use_proxy`: использование прокси (true/false)
        - `proxy`: прокси в формате `login:password@ip:port`
     
