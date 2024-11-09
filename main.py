@@ -1,4 +1,5 @@
 # github.com/Churkashh
+# v1.04
 
 import re
 import os
@@ -139,7 +140,9 @@ class Ozon():
                 
                 elif response.status_code == 403:
                     logger.error(f'[{self.account_name}] Ошибка при просмотре товара (403) -> возможно невалид куки.')
-                    Utils.sleep_func(self.account_name, True)
+                    self.session = session(self.config)
+                    self.load_cycle()
+                    continue
                     
                 elif response.status_code == 404:
                     continue
