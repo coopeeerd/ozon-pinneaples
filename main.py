@@ -8,7 +8,6 @@ import uuid
 import string
 import random
 import ctypes
-import requests
 import threading
 import tls_client
 
