@@ -90,7 +90,6 @@ v1.02: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         },
@@ -99,7 +98,6 @@ v1.02: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         },
@@ -108,7 +106,6 @@ v1.02: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         }
