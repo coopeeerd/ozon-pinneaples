@@ -1,7 +1,7 @@
-# Софт для сбора ананасов с Ozon.ru (python 3.12+)
-
+# Софт для сбора ананасов с ozon.ru
+v1.02: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
 ---
-Версия v1.01
+
 ### ✨ Функционал
 - **Поддержка нескольких аккаунтов одновременно**: Одновременный сбор ананасов с нескольких аккаунтов.
 - **Умная обработка ошибок**: Подробные сообщения об ошибках и действиях аккаунтов.
@@ -28,7 +28,7 @@
                 "proxy": ""
             }
         ],
-        "Pinneaples": {
+        "Sleep_settings": {
             "sleep_between_pinneaples": true,
             "min_delay": 1,
             "max_delay": 1,
@@ -36,31 +36,44 @@
             "chance_to_afk": 1,
             "afk_time_min": 1,
             "afk_time_max": 1
+        },
+        "Error_handling": {
+            "sleep_if_403_status_code": true,
+            "sleep_time_min": 1,
+            "sleep_time_max": 3
         }
     }
     ```
+   - Accounts:
+       - `account_name`: название аккаунта
+       - `x-o3-app-version`: версия приложения (не советую менять)
+       - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки
+       - `use_proxy`: использование прокси (true/false)
+       - `proxy`: прокси в формате `login:password@ip:port`
+    
+   - Sleep_settings:  
+       - `sleep_between_pinneaples`: задержка после каждого сбора ананаса (true/false)
+       - `min_delay`: минимальная задержка после каждого сбора (в секундах)
+       - `max_delay`: максимальная задержка после каждого сбора (в секундах)
+       - `afk`: опция для рандомного ухода аккаунта в спячку после сбора ананасов
+       - `chance_to_afk`: шанс для ухода в спячку (от 0 до 100)
+       - `afk_time_min`: минимальное время спячки (в минутах)
+       - `afk_time_max`: максимальное время спячки (в минутах)
 
-   - `account_name`: название аккаунта
-   - `x-o3-app-version`: версия приложения (не советую менять)
-   - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки
-   - `use_proxy`: использование прокси (true/false)
-   - `proxy`: прокси в формате `login:password@ip:port`
-   - `sleep_between_pinneaples`: задержка после каждого сбора ананаса (true/false)
-   - `min_delay`: минимальная задержка после каждого сбора (в секундах)
-   - `max_delay`: максимальная задержка после каждого сбора (в секундах)
-   - `afk`: опция для рандомного ухода аккаунта в спячку после сбора ананасов
-   - `chance_to_afk`: шанс для ухода в спячку (от 0 до 100)
-   - `afk_time_min`: минимальное время спячки (в минутах)
-   - `afk_time_max`: максимальное время спячки (в минутах)
+   - Error_handling:
+       - `sleep_if_403_status_code`: спячка в случае статус кода 403
+       - `sleep_time_min`: минимальньое время спячки в случае статус кода 403 (в минутах)
+       - `sleep_time_max`: максималньое время спячки в случае статус кода 403 (в минутах)
+
 
 3. Установка зависимостей:
     ```bash
     pip install -r requirements.txt
     ```
    
-4. Запуск:
+4. Запуск (python 3.12+):
     ```bash
-    python main.py
+    py main.py
     ```
 
 ---
