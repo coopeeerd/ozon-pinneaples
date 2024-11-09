@@ -107,12 +107,6 @@ class Ozon():
         self.account_name = config["account_name"]
         self.config = config
     
-    def update_session(self) -> None:
-        """Постоянное обновление сессии"""
-        while True: 
-           self.session = session(self.config)
-           time.sleep(10)
-    
     def load_cycle(self) -> None:
        """Посещение страницы акции"""
        while True:
@@ -188,7 +182,6 @@ class Ozon():
 def process_account(account: dict):
     """Поток для каждого аккаунта"""
     ozon = Ozon(account)
-    threading.Thread(target=ozon.update_session).start()
     ozon.load_cycle()
     ozon.get_pinneaple_product()
 
