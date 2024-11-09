@@ -96,7 +96,7 @@ class Utils():
         start_time = datetime.now()
         if os.name == 'nt':    
             while True:
-                title = f"Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Времени прошло: {datetime.now() - start_time}"
+                title = f"v1.03 Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Времени прошло: {datetime.now() - start_time}"
                 ctypes.windll.kernel32.SetConsoleTitleW(title)
                 time.sleep(0.2)
                 
