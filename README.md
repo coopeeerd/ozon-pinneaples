@@ -1,5 +1,5 @@
 # Софт для сбора ананасов с ozon.ru
-v1.04: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
+v1.05: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
 ---
 
 ### ✨ Функционал
@@ -40,16 +40,17 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
         "Error_handling": {
             "sleep_if_403_status_code": true,
             "sleep_time_min": 1,
-            "sleep_time_max": 3
+            "sleep_time_max": 3,
+            "max_product_check_tries": 1
         }
     }
     ```
    - Accounts:
        - `account_name`: название аккаунта
        - `x-o3-app-version`: версия приложения (не советую менять)
-       - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки, заполнять abt_data не обязательно
+       - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки
        - `use_proxy`: использование прокси (true/false)
-       - `proxy`: прокси в формате `login:password@ip:port`, поддерживаются исключительно HTTP
+       - `proxy`: прокси в формате `login:password@ip:port`
     
    - Sleep_settings:  
        - `sleep_between_pinneaples`: задержка после каждого сбора ананаса (true/false)
@@ -64,6 +65,7 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
        - `sleep_if_403_status_code`: спячка в случае статус кода 403
        - `sleep_time_min`: минимальньое время спячки в случае статус кода 403 (в минутах)
        - `sleep_time_max`: максималньое время спячки в случае статус кода 403 (в минутах)
+       - `max_product_check_tries`: максимальное количество повторений запроса на проверку продукта в случае статус кода 403
 
 
 3. Установка зависимостей:
@@ -90,6 +92,7 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
+            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         },
@@ -98,6 +101,7 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
+            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         },
@@ -106,6 +110,7 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
+            "abt_data": "",
             "use_proxy": false,
             "proxy": ""
         }
