@@ -1,3 +1,4 @@
 loguru
 tls-client
 typing-extensions
+beautifulsoup4
