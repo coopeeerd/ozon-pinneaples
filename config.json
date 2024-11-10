@@ -12,16 +12,17 @@
     ],
     "Sleep_settings": {
         "sleep_between_pinneaples": true,
-        "min_delay": 0,
-        "max_delay": 0,
-        "afk": true,
-        "chance_to_afk": 0,
-        "afk_time_min": 0,
-        "afk_time_max": 0
+        "min_delay": 5,
+        "max_delay": 18,
+        "afk": false,
+        "chance_to_afk": 5,
+        "afk_time_min": 5,
+        "afk_time_max": 20
     },
     "Error_handling": {
         "sleep_if_403_status_code": true,
-        "sleep_time_min": 1,
-        "sleep_time_max": 3
+        "sleep_time_min": 4,
+        "sleep_time_max": 11,
+        "max_product_check_tries": 15
     }
 }
