@@ -115,14 +115,13 @@ class Ozon():
     
     def load_cycle(self) -> None:
         """Посещение страницы акции и получение количества ананасов аккаунта"""
+        tries = 0
         while True:
             try:
-                tries = 0
-                
                 for _ in range(3):
                     resp = self.session.get("https://www.ozon.ru/landing/pineapple/?__rr=1")
-                   
-                soup = BeautifulSoup(resp.text, "html.parser")
+                    
+                soup = BeautifulSoup(resp.text, 'html.parser')
                 
                 pinneaple_tag = soup.find(class_="q3q_29")
                 if pinneaple_tag:
@@ -136,7 +135,7 @@ class Ozon():
                         self.stop_thread() 
                     self.session = session(self.config)
                     continue
-                              
+
                 break
             except Exception as e:
                 logger.warning(f"Исключение: {e}")
@@ -226,6 +225,7 @@ class Ozon():
     
 def process_account(account: dict):
     """Поток для каждого аккаунта"""
+    logger.info(f"[{account["account_name"]}] Запускаю поток...")
     ozon = Ozon(account)
     ozon.load_cycle()
     ozon.get_pinneaple_product()
