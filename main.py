@@ -1,5 +1,5 @@
 # github.com/Churkashh
-# v1.04
+VERSION = 1.05
 
 import re
 import os
@@ -14,24 +14,25 @@ import tls_client
 
 from loguru import logger
 from datetime import datetime
+from bs4 import BeautifulSoup
 
-if os.name == 'nt':
+if os.name == "nt":
     CMD = ctypes.windll.kernel32.GetConsoleWindow()
     ctypes.windll.user32.SetWindowLongW(CMD, -16, ctypes.windll.user32.GetWindowLongW(CMD, -16) | 0x80000)
     ctypes.windll.user32.SetLayeredWindowAttributes(CMD, 0, 235, 0x2)
-    os.system('cls')
+    os.system("cls")
     print("# github.com/Churkashh")
     time.sleep(0.5)
-    os.system('cls')
+    os.system("cls")
     
 
 pinneaples_collected = 0
-cfg = json.load(open('./config.json', encoding='utf-8')) # чтение конфига
+cfg = json.load(open("./config.json", encoding="utf-8")) # чтение конфига
 
 
 def session(config: dict) -> tls_client.Session:
     """Создание tls-client сессии"""
-    session = tls_client.Session(client_identifier='okhttp4_android_13') 
+    session = tls_client.Session(client_identifier="okhttp4_android_13") 
     session.headers = {
             "Accept": "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=UTF-8",
@@ -60,18 +61,20 @@ def session(config: dict) -> tls_client.Session:
 
 class Utils():
     @staticmethod
-    def generate_x_o3() -> str: # Генерация x-o3-fp заголовка
+    def generate_x_o3() -> str: 
+        """Генерация x-o3-fp заголовка"""
         return f"1.{''.join(random.choices(string.hexdigits[:16].lower(), k=16))}"
     
     @staticmethod
     def extract(text: str):
+        """Получение значений для получения ананаса"""
         return re.search(r'"hash_value":"(\d+)"', text).group(1), re.search(r'"product_id":"(\d+)"', text).group(1)
     
     @staticmethod
     def sleep_func(account_name: str, error_403=False) -> None:
         """Задержка в софте"""
         if error_403:
-            if cfg["Error_handling"]["sleep_if_403_status_code"]:
+            if cfg["Error_handling"]["sleep_if_403_status_code"]: # Спячка в случае статус кода 403 при получении ананаса
                 sleep_time = random.randint(cfg["Error_handling"]["sleep_time_min"], cfg["Error_handling"]["sleep_time_max"])
                 logger.info(f"[{account_name}] [STATUS 403] Аккаунт ушёл в спячку на {sleep_time} минут.")
                 time.sleep(sleep_time * 60)
@@ -80,7 +83,7 @@ class Utils():
         
         if cfg["Sleep_settings"]["sleep_between_pinneaples"]: # Пауза после каждого ананаса
             sleep_time = random.randint(cfg["Sleep_settings"]["min_delay"], cfg["Sleep_settings"]["max_delay"])
-            logger.info(f'[{account_name}] Ожидание паузы {sleep_time} секунд.')
+            logger.info(f"[{account_name}] Ожидание паузы {sleep_time} секунд.")
             time.sleep(sleep_time)
                             
         if cfg["Sleep_settings"]["afk"]: # Рандомная спячка после сбора
@@ -95,9 +98,9 @@ class Utils():
         """Название консоли"""
         global pinneaples_collected
         start_time = datetime.now()
-        if os.name == 'nt':    
+        if os.name == "nt":    
             while True:
-                title = f"v1.03 Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Времени прошло: {datetime.now() - start_time}"
+                title = f"v{VERSION} Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Времени прошло: {datetime.now() - start_time}"
                 ctypes.windll.kernel32.SetConsoleTitleW(title)
                 time.sleep(0.2)
                 
@@ -107,25 +110,47 @@ class Ozon():
         self.session = session(config)
         self.account_name = config["account_name"]
         self.config = config
+        self.product_check_tries = 0
+        self.pinneaples_collected = 0
     
     def load_cycle(self) -> None:
-       """Посещение страницы акции"""
-       while True:
-           try:
-               for i in range(3):
-                   self.session.get("https://www.ozon.ru/landing/pineapple?perehod=pineapple_alert")
-
-               break
-           except Exception as e:
-               logger.warning(f'Исключение: {e}')
-               time.sleep(1)
-               continue
+        """Посещение страницы акции и получение количества ананасов аккаунта"""
+        while True:
+            try:
+                tries = 0
+                
+                for _ in range(3):
+                    resp = self.session.get("https://www.ozon.ru/landing/pineapple/?__rr=1")
+                   
+                soup = BeautifulSoup(resp.text, "html.parser")
+                
+                pinneaple_tag = soup.find(class_="q3q_29")
+                if pinneaple_tag:
+                    self.pinneaples = int(pinneaple_tag.get_text())
+                    logger.info(f"[{self.account_name}] Ананасов на аккаунте: {self.pinneaples}")
+                    
+                else:
+                    tries += 1
+                    if tries > 5:   
+                        logger.error(f"[{self.account_name}] Не удалось посетить страницу ананасов ({resp.status_code}) -> куки невалид.")   
+                        self.stop_thread() 
+                    self.session = session(self.config)
+                    continue
+                              
+                break
+            except Exception as e:
+                logger.warning(f"Исключение: {e}")
+                time.sleep(1)
     
     def get_pinneaple_product(self) -> None:
         """Функция получения товара с ананасом"""
         global pinneaples_collected
         while True:
             try:
+                if self.product_check_tries >= cfg["Error_handling"]["max_product_check_tries"]: # Проверка количества неуспешных попыток посмотреть карточку товара
+                    logger.error(f"[{self.account_name}] [MAX_CHECK_TRIES] Лимит просмотра товара превышен.")
+                    self.stop_thread()
+                    
                 value = random.randint(11111111, 999999999)
                 params = {
                     "url": f"/products/{value}/?layout_container=pdppage2copy&layout_page_index=2"
@@ -137,18 +162,22 @@ class Ozon():
                         clean_text = response.text.replace('\\"', '"')
                         payload = {"product_id":Utils.extract(clean_text)[1],"hash_value":Utils.extract(clean_text)[0]}
                         self.collect_pinneaple(payload)
+                    
+                    else:
+                        sleep_time = random.randint(0, 3)
+                        time.sleep(sleep_time)
                 
                 elif response.status_code == 403:
-                    logger.error(f'[{self.account_name}] Ошибка при просмотре товара (403) -> возможно невалид куки.')
+                    self.product_check_tries += 1
+                    logger.error(f"[{self.account_name}] Ошибка при просмотре товара (403) -> возможно невалид куки.")
                     self.session = session(self.config)
-                    self.load_cycle()
                     continue
                     
                 elif response.status_code == 404:
                     continue
                     
                 else:
-                    logger.error(f'[{self.account_name}] Неизвестная ошибка просмотра карточки товара ({response.status_code}) -> {response.text}.')   
+                    logger.error(f"[{self.account_name}] Неизвестная ошибка просмотра карточки товара ({response.status_code}) -> {response.text}.")   
                     time.sleep(1)
             except Exception as e:
                 logger.warning(f"Исключение: {e}")  
@@ -163,15 +192,16 @@ class Ozon():
                 resp = self.session.post("https://api.ozon.ru/composer-api.bx/_action/v2/collapseWidget", json=payload)
                 if resp.status_code == 200:
                     pinneaples_collected += 1
-                    logger.success(f"[{self.account_name}] Успешно залутал ананас: {resp.json()['data']['notificationBar']['title']}.")
+                    self.pinneaples_collected += 1
+                    logger.success(f"[{self.account_name}] Успешно залутал ананас: {resp.json()["data"]["notificationBar"]["title"]}. | Собрано: {self.pinneaples_collected}")
                     Utils.sleep_func(self.account_name)
                 
                 elif resp.status_code == 403:
-                    logger.error(f'[{self.account_name}] Ошибка получения ананаса (403) -> рейтлимит/невалид куки')
+                    logger.error(f"[{self.account_name}] Ошибка получения ананаса (403) -> рейтлимит/невалид куки")
                     Utils.sleep_func(self.account_name, True)
                     
                 else:
-                    logger.error(f'[{self.account_name}] Неизвестная ошибка при получении ананаса ({resp.status_code}) -> {resp.text}')
+                    logger.error(f"[{self.account_name}] Неизвестная ошибка при получении ананаса ({resp.status_code}) -> {resp.text}")
                     time.sleep(1)
 
                 return
@@ -179,6 +209,19 @@ class Ozon():
                 logger.warning(f"Исключение: {e}")
                 time.sleep(1)
                 continue
+            
+            
+    def stop_thread(self) -> None:
+        """Бесконечный цикл (завершение потока)"""
+        try:
+            logger.info(f"[{self.account_name}] Завершаю поток... | Собрано: {self.pinneaples_collected}")
+            while True:
+                time.sleep(0.02)
+                pass
+        except Exception as e:
+            logger.warning(f"Исключение: {e}")
+            time.sleep(1)
+            self.stop_thread()
                     
     
 def process_account(account: dict):
