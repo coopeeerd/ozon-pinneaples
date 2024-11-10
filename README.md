@@ -49,7 +49,7 @@ v1.04: [Оповещения про обновления](https://t.me/+qY4o75Ao
        - `x-o3-app-version`: версия приложения (не советую менять)
        - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки, заполнять abt_data не обязательно
        - `use_proxy`: использование прокси (true/false)
-       - `proxy`: прокси в формате `login:password@ip:port`
+       - `proxy`: прокси в формате `login:password@ip:port`, поддерживаются исключительно HTTP
     
    - Sleep_settings:  
        - `sleep_between_pinneaples`: задержка после каждого сбора ананаса (true/false)
