@@ -114,10 +114,10 @@ class Ozon():
         self.pinneaples_collected = 0
         
     def reset_product_check_tries(self) -> None:
-        """Сбрасывает счётчик неуспешных просмотров товара"""
+        """Сбрасывает счётчик неудачных попыток просмотра товара"""
         while True:
             self.product_check_tries = 0
-            time.sleep(900)
+            time.sleep(1800)
     
     def load_cycle(self) -> None:
         """Посещение страницы акции и получение количества ананасов аккаунта"""
