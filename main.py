@@ -1,5 +1,5 @@
 # github.com/Churkashh
-VERSION = 1.05
+VERSION = 1.06
 
 import re
 import os
@@ -112,6 +112,12 @@ class Ozon():
         self.config = config
         self.product_check_tries = 0
         self.pinneaples_collected = 0
+        
+    def reset_product_check_tries(self) -> None:
+        """Сбрасывает счётчик неуспешных просмотров товара"""
+        while True:
+            self.product_check_tries = 0
+            time.sleep(900)
     
     def load_cycle(self) -> None:
         """Посещение страницы акции и получение количества ананасов аккаунта"""
@@ -227,6 +233,7 @@ def process_account(account: dict):
     """Поток для каждого аккаунта"""
     logger.info(f"[{account["account_name"]}] Запускаю поток...")
     ozon = Ozon(account)
+    threading.Thread(target=ozon.reset_product_check_tries).start()
     ozon.load_cycle()
     ozon.get_pinneaple_product()
 
