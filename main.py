@@ -1,5 +1,5 @@
 # github.com/Churkashh
-VERSION = 1.06
+VERSION = 1.07
 
 import re
 import os
@@ -25,7 +25,7 @@ if os.name == "nt":
     time.sleep(0.5)
     os.system("cls")
     
-
+products_checked = 0
 pinneaples_collected = 0
 cfg = json.load(open("./config.json", encoding="utf-8")) # чтение конфига
 
@@ -96,11 +96,11 @@ class Utils():
     @staticmethod
     def set_title():
         """Название консоли"""
-        global pinneaples_collected
+        global pinneaples_collected, products_checked
         start_time = datetime.now()
         if os.name == "nt":    
             while True:
-                title = f"v{VERSION} Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Времени прошло: {datetime.now() - start_time}"
+                title = f"v{VERSION} Фармер Ананасов (github.com/Churkashh) | Используется аккаунтов: {len(cfg["Accounts"])} | Собрано ананасов: {pinneaples_collected} | Товаров просмотрено: {products_checked} | Времени прошло: {datetime.now() - start_time}"
                 ctypes.windll.kernel32.SetConsoleTitleW(title)
                 time.sleep(0.2)
                 
@@ -149,7 +149,7 @@ class Ozon():
     
     def get_pinneaple_product(self) -> None:
         """Функция получения товара с ананасом"""
-        global pinneaples_collected
+        global pinneaples_collected, products_checked
         while True:
             try:
                 if self.product_check_tries >= cfg["Error_handling"]["max_product_check_tries"]: # Проверка количества неуспешных попыток посмотреть карточку товара
@@ -163,14 +163,16 @@ class Ozon():
                         
                 response = self.session.get("https://api.ozon.ru/composer-api.bx/page/json/v2", params=params)
                 if response.status_code == 200:
+                    products_checked += 1
                     if "hash" in response.text:
                         clean_text = response.text.replace('\\"', '"')
                         payload = {"product_id":Utils.extract(clean_text)[1],"hash_value":Utils.extract(clean_text)[0]}
                         self.collect_pinneaple(payload)
                     
                     else:
-                        sleep_time = random.randint(0, 3)
-                        time.sleep(sleep_time)
+                        if cfg["Sleep_settings"]["sleep_between_products"]:
+                            sleep_time = random.uniform(cfg["Sleep_settings"]["min_time"], cfg["Sleep_settings"]["max_time"])
+                            time.sleep(sleep_time)
                 
                 elif response.status_code == 403:
                     self.product_check_tries += 1
@@ -198,6 +200,10 @@ class Ozon():
                 if resp.status_code == 200:
                     pinneaples_collected += 1
                     self.pinneaples_collected += 1
+                    if "2" in resp.text:
+                        pinneaples_collected += 1
+                        self.pinneaples_collected += 1
+                    
                     logger.success(f"[{self.account_name}] Успешно залутал ананас: {resp.json()["data"]["notificationBar"]["title"]}. | Собрано: {self.pinneaples_collected}")
                     Utils.sleep_func(self.account_name)
                 
