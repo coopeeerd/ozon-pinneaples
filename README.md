@@ -1,5 +1,5 @@
 # Софт для сбора ананасов с ozon.ru
-v1.06: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
+v1.07: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
 ---
 
 ### ✨ Функционал
@@ -35,7 +35,10 @@ v1.06: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "afk": true,
             "chance_to_afk": 1,
             "afk_time_min": 1,
-            "afk_time_max": 1
+            "afk_time_max": 1,
+            "sleep_between_products": true,
+            "min_time": 0.1,
+            "max_time": 1.1
         },
         "Error_handling": {
             "sleep_if_403_status_code": true,
@@ -50,16 +53,19 @@ v1.06: [Оповещения про обновления](https://t.me/+qY4o75Ao
        - `x-o3-app-version`: версия приложения (не советую менять)
        - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки, abt_data заполнять необязательно
        - `use_proxy`: использование прокси (true/false)
-       - `proxy`: прокси в формате `login:password@ip:port`
+       - `proxy`: прокси в формате `login:password@ip:port`, поддерживаются `HTTP` прокси
     
    - Sleep_settings:  
        - `sleep_between_pinneaples`: задержка после каждого сбора ананаса (true/false)
        - `min_delay`: минимальная задержка после каждого сбора (в секундах)
        - `max_delay`: максимальная задержка после каждого сбора (в секундах)
-       - `afk`: опция для рандомного ухода аккаунта в спячку после сбора ананасов
+       - `afk`: опция для рандомного ухода аккаунта в спячку после сбора ананасов (true/false)
        - `chance_to_afk`: шанс для ухода в спячку (от 0 до 100)
        - `afk_time_min`: минимальное время спячки (в минутах)
        - `afk_time_max`: максимальное время спячки (в минутах)
+       - `sleep_between_products`: задержка между проверкой продуктов на наличие ананаса (true/false)
+       - `min_time`: минимальная задержка между проверкой продуктов (в секундах)
+       - `max_time`: максимальная задержка между проверкой продуктов (в секундах)
 
    - Error_handling:
        - `sleep_if_403_status_code`: спячка в случае статус кода 403
