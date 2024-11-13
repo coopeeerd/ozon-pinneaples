@@ -1,5 +1,5 @@
 # github.com/Churkashh
-VERSION = 1.07
+VERSION = 1.08
 
 import re
 import os
@@ -32,7 +32,7 @@ cfg = json.load(open("./config.json", encoding="utf-8")) # чтение конф
 
 def session(config: dict) -> tls_client.Session:
     """Создание tls-client сессии"""
-    session = tls_client.Session(client_identifier="okhttp4_android_13") 
+    session = tls_client.Session(client_identifier="okhttp4_android_13", random_tls_extension_order=True) 
     session.headers = {
             "Accept": "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=UTF-8",
@@ -64,6 +64,12 @@ class Utils():
     def generate_x_o3() -> str: 
         """Генерация x-o3-fp заголовка"""
         return f"1.{''.join(random.choices(string.hexdigits[:16].lower(), k=16))}"
+    
+    @staticmethod
+    def generate_abt_data(prefix="7.") -> str:
+        """Генерация рандом abt_data"""
+        length = random.randint(475, 520)
+        return prefix + ''.join(random.choice(string.ascii_letters + string.digits + "-_") for _ in range(length))
     
     @staticmethod
     def extract(text: str):
@@ -118,6 +124,13 @@ class Ozon():
         while True:
             self.product_check_tries = 0
             time.sleep(1800)
+            
+    def update_abt_data(self) -> None:
+        """Постоянно обновляет abt_data"""
+        if self.config["generate_abt_data"]:
+            while True:
+                self.session.cookies.set("abt_data", Utils.generate_abt_data())
+                time.sleep(30)
     
     def load_cycle(self) -> None:
         """Посещение страницы акции и получение количества ананасов аккаунта"""
@@ -240,6 +253,7 @@ def process_account(account: dict):
     logger.info(f"[{account["account_name"]}] Запускаю поток...")
     ozon = Ozon(account)
     threading.Thread(target=ozon.reset_product_check_tries).start()
+    threading.Thread(target=ozon.update_abt_data).start()
     ozon.load_cycle()
     ozon.get_pinneaple_product()
 
