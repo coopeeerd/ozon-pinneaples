@@ -1,5 +1,8 @@
 # Софт для сбора ананасов с ozon.ru
-v1.07: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
+v1.08: [Оповещения про обновления](https://t.me/+qY4o75AoHXkxYzY6)
+---
+# Изменения
+- [2024-11-13 - v1.08]: [BETA] Опция случайной генерации abt_data каждые 30 секунд.
 ---
 
 ### ✨ Функционал
@@ -23,7 +26,8 @@ v1.07: [Оповещения про обновления](https://t.me/+qY4o75Ao
                 "x-o3-app-version": "17.40.1(2518)",
                 "__Secure-access-token": "",
                 "__Secure-refresh-token": "",
-                "abt_data": "",
+                "abt_data": "",,
+                "generate_abt_data": true,
                 "use_proxy": false,
                 "proxy": ""
             }
@@ -52,6 +56,7 @@ v1.07: [Оповещения про обновления](https://t.me/+qY4o75Ao
        - `account_name`: название аккаунта
        - `x-o3-app-version`: версия приложения (не советую менять)
        - `__Secure-refresh-token`, `__Secure-access-token`, `abt_data`: ваши куки, abt_data заполнять необязательно
+       - `generate_abt_data`: генерация abt_data каждые 30 секунд (beta)
        - `use_proxy`: использование прокси (true/false)
        - `proxy`: прокси в формате `login:password@ip:port`, поддерживаются `HTTP` прокси
     
@@ -98,7 +103,8 @@ v1.07: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
+            "abt_data": "",,
+            "generate_abt_data": true,
             "use_proxy": false,
             "proxy": ""
         },
@@ -107,7 +113,8 @@ v1.07: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
+            "abt_data": "",,
+            "generate_abt_data": true,
             "use_proxy": false,
             "proxy": ""
         },
@@ -116,7 +123,8 @@ v1.07: [Оповещения про обновления](https://t.me/+qY4o75Ao
             "x-o3-app-version": "17.40.1(2518)",
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
-            "abt_data": "",
+            "abt_data": "",,
+            "generate_abt_data": true,
             "use_proxy": false,
             "proxy": ""
         }
