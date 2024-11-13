@@ -6,6 +6,7 @@
             "__Secure-access-token": "",
             "__Secure-refresh-token": "",
             "abt_data": "",
+            "generate_abt_data": true,
             "use_proxy": false,
             "proxy": ""
         }
