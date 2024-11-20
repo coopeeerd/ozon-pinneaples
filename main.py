@@ -142,7 +142,7 @@ class Ozon():
                     
                 soup = BeautifulSoup(resp.text, 'html.parser')
                 
-                pinneaple_tag = soup.find(class_="q3q_29")
+                pinneaple_tag = soup.find(class_="zp7_29")
                 if pinneaple_tag:
                     self.pinneaples = int(pinneaple_tag.get_text())
                     logger.info(f"[{self.account_name}] Ананасов на аккаунте: {self.pinneaples}")
